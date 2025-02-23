@@ -1,20 +1,17 @@
-import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import UserContext from '../UserContext'; // Adjust the path if needed
 
-const UserProfile = (props) => {
+function UserProfile() {
+  // Access user data from context
+  const userData = useContext(UserContext);
+
   return (
     <div style={{ border: '1px solid gray', padding: '10px', margin: '10px' }}>
-      <h2 style={{ color: 'blue' }}>{props.name}</h2>
-      <p>Age: <span style={{ fontWeight: 'bold' }}>{props.age}</span></p>
-      <p>Bio: {props.bio}</p>
+      <h2 style={{ color: 'blue' }}>{userData.name}</h2>
+      <p>Age: <span style={{ fontWeight: 'bold' }}>{userData.age}</span></p>
+      <p>Bio: {userData.bio}</p>
     </div>
   );
-};
-
-// Add prop validation
-UserProfile.propTypes = {
-  name: PropTypes.string.isRequired,
-  age: PropTypes.number.isRequired,
-  bio: PropTypes.string.isRequired
-};
+}
 
 export default UserProfile;
