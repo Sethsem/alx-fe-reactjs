@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-// Create the UserContext
+// Create a Context
 const UserContext = createContext();
 
 export default UserContext;
