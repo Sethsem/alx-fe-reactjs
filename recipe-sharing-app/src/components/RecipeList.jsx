@@ -1,11 +1,10 @@
 import React from 'react';
-import useRecipeStore from '../store/recipeStore';
+import useRecipeStore from '../recipeStore';
 import { Link } from 'react-router-dom';
+import FavoriteButton from './FavoriteButton';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) =>
-    state.searchTerm ? state.filteredRecipes : state.recipes
-  );
+  const recipes = useRecipeStore((state) => state.recipes);
 
   return (
     <div>
@@ -14,13 +13,15 @@ const RecipeList = () => {
           <div key={recipe.id} style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>
             <h3>{recipe.title}</h3>
             <p>{recipe.description}</p>
+            <FavoriteButton recipeId={recipe.id} />
+            <br />
             <Link to={`/recipe/${recipe.id}`} style={{ color: 'blue', textDecoration: 'none' }}>
               View Details
             </Link>
           </div>
         ))
       ) : (
-        <p>No recipes found.</p>
+        <p>No recipes available.</p>
       )}
     </div>
   );
