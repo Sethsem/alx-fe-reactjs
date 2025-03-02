@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useRecipeStore from '../store/recipeStore';
+import useRecipeStore from '..recipeStore';
 
 const RecommendationsList = () => {
   const { recommendations, generateRecommendations } = useRecipeStore((state) => ({
@@ -9,7 +9,7 @@ const RecommendationsList = () => {
 
   useEffect(() => {
     generateRecommendations();
-  }, []);
+  }, [generateRecommendations]);
 
   return (
     <div style={{ marginTop: '20px' }}>
