@@ -4,8 +4,11 @@ const useRecipeStore = create((set) => ({
   recipes: [], // Initial state
   favorites: [],
   recommendations: [],
+  searchTerm: "", // Search term state
 
   setRecipes: (newRecipes) => set({ recipes: newRecipes }), // Function to update recipes
+
+  setSearchTerm: (term) => set({ searchTerm: term }), // Function to update search term
 
   addRecipe: (newRecipe) =>
     set((state) => ({ recipes: [...state.recipes, newRecipe] })),
@@ -41,6 +44,14 @@ const useRecipeStore = create((set) => ({
       );
       return { recommendations: recommended };
     }),
+
+  // Filtered Recipes based on searchTerm
+  filteredRecipes: () =>
+    set((state) => ({
+      recipes: state.recipes.filter((recipe) =>
+        recipe.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+      ),
+    })),
 }));
 
 export default useRecipeStore;
