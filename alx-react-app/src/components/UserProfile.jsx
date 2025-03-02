@@ -1,11 +1,20 @@
+import PropTypes from 'prop-types';
+
 const UserProfile = (props) => {
-    return (
-        <div style={{ border: '2px solid gray', borderRadius: '10px', padding: '15px', margin: '15px', boxShadow: '2px 2px 10px rgba(0,0,0,0.1)' }}>
-            <h2 style={{ color: 'blue', fontSize: '1.5rem' }}>{props.name}</h2>
-            <p>Age: <span style={{ fontWeight: 'bold', color: 'darkgreen' }}>{props.age}</span></p>
-            <p style={{ fontStyle: 'italic' }}>{props.bio}</p>
-        </div>
-    );
+  return (
+    <div style={{ border: '1px solid gray', padding: '10px', margin: '10px' }}>
+      <h2 style={{ color: 'blue' }}>{props.name}</h2>
+      <p>Age: <span style={{ fontWeight: 'bold' }}>{props.age}</span></p>
+      <p>Bio: {props.bio}</p>
+    </div>
+  );
+};
+
+// Add prop validation
+UserProfile.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
+  bio: PropTypes.string.isRequired
 };
 
 export default UserProfile;
