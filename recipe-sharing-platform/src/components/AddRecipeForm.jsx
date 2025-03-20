@@ -6,24 +6,28 @@ const AddRecipeForm = ({ onAddRecipe }) => {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
+  // ✅ Add a validate function
+  const validate = () => {
+    let newErrors = {};
+    if (!title.trim()) newErrors.title = "Recipe title is required";
+    if (!ingredients.trim()) newErrors.ingredients = "At least one ingredient is required";
+    if (!steps.trim()) newErrors.steps = "Preparation steps are required";
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simple validation
-    let newErrors = {};
-    if (!title) newErrors.title = "Recipe title is required";
-    if (!ingredients) newErrors.ingredients = "At least one ingredient is required";
-    if (!steps) newErrors.steps = "Preparation steps are required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     const newRecipe = {
       id: Date.now(),
       title,
-      summary: steps.substring(0, 50) + "...", // Short summary
+      summary: steps.substring(0, 50) + "...",
       image: "https://via.placeholder.com/150",
       ingredients: ingredients.split(",").map((item) => item.trim()),
       instructions: steps,
