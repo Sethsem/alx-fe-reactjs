@@ -8,6 +8,6 @@ export const fetchUserData = async (username) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching user:", error);
-    return null; 
+    return null; // Return null if user not found
   }
 };
