@@ -17,6 +17,7 @@ const Search = () => {
     try {
       const response = await axios.get(`https://api.github.com/users/${username}`);
       setUser(response.data);
+      setError(false); // Reset error if successful
     } catch (err) {
       setUser(null);
       setError(true);
