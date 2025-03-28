@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import axios from "axios";
 
@@ -8,23 +7,29 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!username.trim()) return;
-
+  // Define fetchUserData function
+  const fetchUserData = async (searchUsername) => {
     setLoading(true);
     setError(false);
 
     try {
-      const response = await axios.get(`https://api.github.com/users/${username}`);
+      const response = await axios.get(`https://api.github.com/users/${searchUsername}`);
       setUser(response.data);
       setError(false);
+    // eslint-disable-next-line no-unused-vars
     } catch (err) {
       setUser(null);
       setError(true);
     }
 
     setLoading(false);
+  };
+
+  // Call fetchUserData from handleSearch
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!username.trim()) return;
+    fetchUserData(username);
   };
 
   return (
@@ -49,7 +54,7 @@ const Search = () => {
       {loading && <p className="text-center text-gray-500">Loading...</p>}
 
       {/* Error Message (Updated Text) */}
-      {error && <p className="text-center text-red-500">["Looks like we cant find the user"]</p>}
+      {error && <p className="text-center text-red-500">[Looks like we cant find the user]</p>}
 
       {/* Display User Info */}
       {user && (
