@@ -7,7 +7,7 @@ const Search = ({ onSearch }) => {
     e.preventDefault();
     if (username.trim()) {
       onSearch(username);
-      setUsername(""); // Clear input after search
+      setUsername(""); 
     }
   };
 
