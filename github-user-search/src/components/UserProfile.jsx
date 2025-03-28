@@ -1,5 +1,15 @@
-const UserProfile = ({ user }) => {
-  if (!user) return <p className="text-center text-gray-500">No user found</p>;
+const UserProfile = ({ user, loading, error }) => {
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Looks like we can't find the user</p>;
+  }
+
+  if (!user) {
+    return <p className="text-center text-gray-500">Search for a user to see results</p>;
+  }
 
   return (
     <div className="p-4 border rounded-md shadow-md text-center">
