@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import axios from "axios";
 
@@ -17,7 +18,7 @@ const Search = () => {
     try {
       const response = await axios.get(`https://api.github.com/users/${username}`);
       setUser(response.data);
-      setError(false); // Reset error if successful
+      setError(false);
     } catch (err) {
       setUser(null);
       setError(true);
@@ -47,8 +48,8 @@ const Search = () => {
       {/* Loading State */}
       {loading && <p className="text-center text-gray-500">Loading...</p>}
 
-      {/* Error Message */}
-      {error && <p className="text-center text-red-500">Looks like we can't find the user</p>}
+      {/* Error Message (Updated Text) */}
+      {error && <p className="text-center text-red-500">["Looks like we cant find the user"]</p>}
 
       {/* Display User Info */}
       {user && (
