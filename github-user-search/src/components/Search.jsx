@@ -16,6 +16,7 @@ const Search = () => {
     try {
       const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
       setUsers(response.data.items);
+    
     } catch (err) {
       setError(true);
     }
@@ -60,7 +61,7 @@ const Search = () => {
         </button>
       </form>
       {loading && <p className="text-center">Loading...</p>}
-      {error && <p className="text-center text-red-500">Looks like we can't find the user</p>}
+      {error && <p className="text-center text-red-500">["Looks like we cant find the user"]</p>}
       <div className="mt-4">
         {users.map((user) => (
           <div key={user.id} className="p-2 border rounded-md mb-2">
