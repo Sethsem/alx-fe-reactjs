@@ -1,7 +1,12 @@
-import Search from "./components/Search";
+import React from 'react';
+import Search from './components/Search';
 
 function App() {
-  return <Search />;
+  return (
+    <div className="App">
+      <Search />
+    </div>
+  );
 }
 
 export default App;

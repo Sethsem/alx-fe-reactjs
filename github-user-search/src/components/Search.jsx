@@ -1,77 +1,82 @@
-import { useState } from "react";
-import axios from "axios";
+/* eslint-disable no-unused-vars */
+import { useState } from 'react';
+import axios from 'axios';
 
 const Search = () => {
-  const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState('');
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  // Define fetchUserData function
-  const fetchUserData = async (searchUsername) => {
+  const fetchUsers = async (query) => {
     setLoading(true);
     setError(false);
-
     try {
-      const response = await axios.get(`https://api.github.com/users/${searchUsername}`);
-      setUser(response.data);
-      setError(false);
-    // eslint-disable-next-line no-unused-vars
+      const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
+      setUsers(response.data.items);
+    
     } catch (err) {
-      setUser(null);
       setError(true);
     }
-
     setLoading(false);
   };
 
-  // Call fetchUserData from handleSearch
   const handleSearch = (e) => {
     e.preventDefault();
-    if (!username.trim()) return;
-    fetchUserData(username);
+    let query = username ? `${username} in:login` : '';
+    if (location) query += ` location:${location}`;
+    if (minRepos) query += ` repos:>=${minRepos}`;
+    fetchUsers(query);
   };
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">GitHub User Search</h1>
-
-      {/* Search Input */}
-      <form onSubmit={handleSearch} className="flex gap-2 p-4">
+      <h1 className="text-2xl font-bold text-center mb-4">GitHub Advanced User Search</h1>
+      <form onSubmit={handleSearch} className="flex flex-col gap-2 p-4">
         <input
           type="text"
-          placeholder="Enter GitHub username..."
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="border p-2 rounded-md w-full"
+          className="border p-2 rounded-md"
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="border p-2 rounded-md"
+        />
+        <input
+          type="number"
+          placeholder="Minimum Repositories"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="border p-2 rounded-md"
         />
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">
           Search
         </button>
       </form>
-
-      {/* Loading State */}
-      {loading && <p className="text-center text-gray-500">Loading...</p>}
-
-      {/* Error Message (Updated Text) */}
-      {error && <p className="text-center text-red-500">[Looks like we cant find the user]</p>}
-
-      {/* Display User Info */}
-      {user && (
-        <div className="p-4 border rounded-md shadow-md text-center">
-          <img src={user.avatar_url} alt={user.login} className="w-24 h-24 rounded-full mx-auto" />
-          <h2 className="text-xl font-semibold mt-2">{user.name || user.login}</h2>
-          <p className="text-gray-600">@{user.login}</p>
-          <a
-            href={user.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 mt-2 block"
-          >
-            View Profile
-          </a>
-        </div>
-      )}
+      {loading && <p className="text-center">Loading...</p>}
+      {error && <p className="text-center text-red-500">Looks like we can't find the user</p>}
+      <div className="mt-4">
+        {users.map((user) => (
+          <div key={user.id} className="p-2 border rounded-md mb-2">
+            <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full" />
+            <a
+              href={user.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600"
+            >
+              {user.login}
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
