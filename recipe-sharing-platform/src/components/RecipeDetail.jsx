@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
 const RecipeDetail = () => {
-  const { id } = useParams(); // Get recipe ID from URL
+  const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {

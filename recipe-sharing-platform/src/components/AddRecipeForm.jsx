@@ -6,7 +6,7 @@ const AddRecipeForm = ({ onAddRecipe }) => {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
-  // ✅ Add a validate function
+  
   const validate = () => {
     let newErrors = {};
     if (!title.trim()) newErrors.title = "Recipe title is required";
@@ -35,7 +35,7 @@ const AddRecipeForm = ({ onAddRecipe }) => {
 
     onAddRecipe(newRecipe);
 
-    // Reset form
+    
     setTitle("");
     setIngredients("");
     setSteps("");
